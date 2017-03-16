@@ -1,0 +1,176 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>cn.com.huak</groupId>
+	<artifactId>platform</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<name>platform</name>
+	<url>http://huak.com.cn</url>
+
+	<properties>
+
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<!-- Common libs -->
+		<spring_version>4.2.0.RELEASE</spring_version>
+		<javassist_version>3.15.0-GA</javassist_version>
+		<netty_version>3.7.0.Final</netty_version>
+		<dubbo_version>2.8.4</dubbo_version>
+		<jstl_version>1.2</jstl_version>
+		<servlet_api_version>3.0.1</servlet_api_version>
+		<!-- <jsp_api_version>2.1</jsp_api_version> -->
+		<zkclient_version>0.1</zkclient_version>
+		<zookeeper_version>3.3.3</zookeeper_version>
+		<junit_version>3.8.1</junit_version>
+		<jetty_version>6.1.26</jetty_version>
+		<hessian_version>4.0.7</hessian_version>
+		<hessian_lite_version>3.2.1-fixed-2</hessian_lite_version>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>${junit_version}</version>
+				<scope>test</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>javax.servlet-api</artifactId>
+				<version>${servlet_api_version}</version>
+			</dependency>
+			<!-- <dependency> <groupId>javax.servlet.jsp</groupId> <artifactId>jsp-api</artifactId> 
+				<version>${jsp_api_version}</version> </dependency> -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-context</artifactId>
+				<version>${spring_version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-core</artifactId>
+				<version>${spring_version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-webmvc</artifactId>
+				<version>${spring_version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-beans</artifactId>
+				<version>${spring_version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-context-support</artifactId>
+				<version>${spring_version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-jdbc</artifactId>
+				<version>${spring_version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-oxm</artifactId>
+				<version>${spring_version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-web</artifactId>
+				<version>${spring_version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-test</artifactId>
+				<version>${spring_version}</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>jstl</groupId>
+				<artifactId>jstl</artifactId>
+				<version>${jstl_version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>dubbo</artifactId>
+				<version>${dubbo_version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.javassist</groupId>
+				<artifactId>javassist</artifactId>
+				<version>${javassist_version}</version>
+			</dependency>
+			<dependency>
+				<groupId>io.netty</groupId>
+				<artifactId>netty</artifactId>
+				<version>${netty_version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.mortbay.jetty</groupId>
+				<artifactId>jetty</artifactId>
+				<version>${jetty_version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.caucho</groupId>
+				<artifactId>hessian</artifactId>
+				<version>${hessian_version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>hessian-lite</artifactId>
+				<version>${hessian_lite_version}</version>
+			</dependency>
+			<dependency>
+				<groupId>log4j</groupId>
+				<artifactId>log4j</artifactId>
+				<version>1.2.17</version>
+			</dependency>
+			<dependency>
+				<groupId>com.github.sgroschupf</groupId>
+				<artifactId>zkclient</artifactId>
+				<version>${zkclient_version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.zookeeper</groupId>
+				<artifactId>zookeeper</artifactId>
+				<version>${zookeeper_version}</version>
+			</dependency>
+			<!-- 序列化插件 -->
+			<dependency>
+				<groupId>com.esotericsoftware.kryo</groupId>
+				<artifactId>kryo</artifactId>
+				<version>2.24.0</version>
+			</dependency>
+			<dependency>
+				<groupId>de.javakaffee</groupId>
+				<artifactId>kryo-serializers</artifactId>
+				<version>0.26</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+
+
+
+	<modules>
+		<module>ProducerDemo</module>
+		<module>ConsumerDemo</module>
+		<module>platform-api</module>
+	</modules>
+</project>

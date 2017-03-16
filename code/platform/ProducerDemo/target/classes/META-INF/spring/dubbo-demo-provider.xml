@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- - Copyright 1999-2011 Alibaba Group. - - Licensed under the Apache License, 
+	Version 2.0 (the "License"); - you may not use this file except in compliance 
+	with the License. - You may obtain a copy of the License at - - http://www.apache.org/licenses/LICENSE-2.0 
+	- - Unless required by applicable law or agreed to in writing, software - 
+	distributed under the License is distributed on an "AS IS" BASIS, - WITHOUT 
+	WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. - See the 
+	License for the specific language governing permissions and - limitations 
+	under the License. -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+	<!-- 设置服务名称 -->
+	<!-- 设置应用负责人及服务负责人 -->
+	<!-- 
+		目前有负责人信息和组织信息（用于区分站点）。
+
+		有问题时便于的找到服务的负责人，至少写两个人以便备份。
+
+		负责人和组织的信息可以在注册中心的上看到。
+	
+	 -->
+	<dubbo:application name="hello-world-app" owner="yinbin" organization="IG" />
+	<!-- 设置注册中心地址 -->
+	<dubbo:registry protocol="zookeeper"
+		address="zookeeperServer1:2181,zookeeperServer2:2181,zookeeperServer3:2181" />
+	<!-- 设置服务传输协议及端口 \服务线程池大小-->
+	 <dubbo:protocol name="dubbo" port="20880" threads="200" server="netty"  serialization="kryo" optimizer="cn.com.huak.serializable.SerializationOptimizerImpl"/>
+<!-- 	<dubbo:protocol name="http" port="20881" threads="200" serialization="kryo"/>  -->
+	<dubbo:protocol name="hessian" port="20882" threads="200"  />
+
+	
+	<!-- 在Provider上尽量多配置Consumer端属性 
+		原因如下： 作服务的提供者，比服务使用方更清楚服务性能参数，如调用的超时时间，合理的重试次数，等等 
+		在Provider配置后，Consumer不配置则会使用Provider的配置值，即Provider配置可以作为Consumer的缺省值。 否则，Consumer会使用Consumer端的全局设置，这对于Provider不可控的，并且往往是不合理的。 
+		PS: 配置的覆盖规则：
+		1) 方法级配置别优于接口级别，即小Scope优先 
+		2) Consumer端配置 优于 Provider配置 优于 全局配置，最后是Dubbo Hard Code的配置值 
+		-->
+		<!-- 
+		在Provider可以配置的Consumer端属性有：
+
+		timeout，方法调用超时
+		retries，失败重试次数，缺省是2（表示加上第一次调用，会调用3次）
+		loadbalance，负载均衡算法（有多个Provider时，如何挑选Provider调用），缺省是随机（random）。
+					   还可以有轮训(roundrobin)、最不活跃优先（leastactive，指从Consumer端并发调用最好的Provider，可以减少的反应慢的Provider的调用，因为反应更容易累积并发的调用）
+		actives，消费者端，最大并发调用限制，即当Consumer对一个服务的并发调用到上限后，新调用会Wait直到超时。
+				在方法上配置（dubbo:method ）则并发限制针对方法，在接口上配置（dubbo:service），则并发限制针对服务。
+		
+		 -->
+		 <!-- 
+		 executes，一个服务提供者并行执行请求上限，即当Provider对一个服务的并发调用到上限后，
+		 			新调用会Wait（Consumer可能到超时）。在方法上配置（dubbo:method ）
+		 			则并发限制针对方法，在接口上配置（dubbo:service），则并发限制针对服务。 -->
+	<dubbo:service interface="cn.com.huak.demo.api.DemoServer"
+		ref="demoService" timeout="300"  loadbalance="random" executes="200"
+		actives="0"  owner="yinbin" version="1.0">
+		<dubbo:method name="sayHello" timeout="10000" retries="9"
+			loadbalance="leastactive" actives="5" executes="50" />
+			<dubbo:method name="getH" timeout="10000" retries="9"
+			loadbalance="leastactive" actives="5" executes="50" />
+	</dubbo:service>
+	<bean id="demoService" class="cn.com.huak.demo.provider.DemoServerImpl" />
+</beans>
